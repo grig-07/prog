@@ -15,4 +15,4 @@ int main() {
 4. Запущен ассемблер: "as lab0.S -o lab.o"
 5. Запущен линковщик: "cc lab0.o -o lab"
 ## Скриншот
-! [Компиляция и запуск](screenshot.png)
+![Компиляция и запуск](screenshot.png)
