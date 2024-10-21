@@ -7,6 +7,7 @@
 ## Cхема
 ![блок-схема lab1](https://github.com/user-attachments/assets/99f2f302-88cd-411c-a6ef-066f0a375f69)
 ## Программа
+```c
 #include <stdio.h>
  
  int main()
@@ -39,6 +40,7 @@
     printf("number of parameter = %d, part = %f\n", 3, part_a3);
     return 0;
 }
+```
 Программа находится в файле: lab1.c
 
 
