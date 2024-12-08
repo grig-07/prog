@@ -65,5 +65,5 @@ def find_min_max_divisors(num):
     for num, M in result:
         print(f"Число: {num}, M: {M}")
 ```
-## Ответ:
+
 
