@@ -48,5 +48,5 @@ output = to_str_iterative(lst)
 print(output)
 ``` 
 ## Скриншоты вывода терминала:
-README.md ![вывод терминала](result lab7.png)
+result lab7.png
 
