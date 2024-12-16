@@ -104,4 +104,4 @@ int main(){
 ```
 # Вывод:
 
-![вывод терминала](вывод терминала.png)
+![вывод терминала](file:///home/user/Desktop/students/601-41/ivanov/prog/lab_3/вывод терминала.png)
