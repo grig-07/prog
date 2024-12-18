@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 plt.plot([1,2,3,4,5],[1,2,3,4,5])
 plt.show()
 ```
-![1_2](lessons/images/1_2.png)
+![1.2](1.2.png)
 ### Урок 1.3
 ``` python
 import matplotlib.pyplot as plt
@@ -37,7 +37,7 @@ plt.grid()
 plt.plot(x, y)  # построение графика
 plt.show()
 ```
-![1_3](lessons/images/1_3.png)
+![1.3](1.3.png)
 ### Урок 1.4
 ``` python
 import matplotlib.pyplot as plt
@@ -54,7 +54,7 @@ plt.grid() # включение отображение сетки
 plt.plot(x, y1, x, y2) # построение графика
 plt.show()
 ```
-![1_4](lessons/images/1_4.png)
+![1.4](1.4.png)
 
 ### Урок 1.5
 ``` python
@@ -80,7 +80,7 @@ plt.grid(True) #включение отображение сетки
 
 plt.show()
 ```
-![1_5](lessons/images/1_5.png)
+![1.5](1.5.png)
 
 ### Урок 1.6
 ``` python
@@ -94,7 +94,7 @@ plt.xlabel('Fruit') #ось абцисс
 plt.ylabel('Count') #ось ординат
 plt.show()
 ```
-![1_6](lessons/images/1_6.png)
+![1.6](1.6.png)
 ### Урок 2.1 + 2.2
 ``` python
 import matplotlib.pyplot as plt
@@ -110,7 +110,7 @@ plt.grid(True)
 plt.text(15, 4, 'grow up!')
 plt.show()
 ```
-![2_1+2](lessons/images/2_1+2.png)
+![2.1-2.2](2.1.png)
 ### Урок 2.3
 ``` python
 import matplotlib.pyplot as plt
@@ -120,7 +120,7 @@ y = [1, 7, 3, 5, 11]
 plt.plot(x, y, '--r')
 plt.show()
 ```
-![2_3](lessons/images/2_3.png)
+![2_3](2.3.png)
 ### Урок 2.4
 ``` python
 import matplotlib.pyplot as plt
@@ -142,7 +142,7 @@ plt.subplot(2, 2, 4)
 plt.plot(x, y4, ':')
 plt.show()
 ```
-![2_4](lessons/images/2_4.png)
+![2.4](2.4.png)
 ### Урок 2.5
 ``` python
 import matplotlib.pyplot as plt
@@ -155,7 +155,7 @@ y4 = [i*1.2 + 1 for i in y3]
 plt.plot(x, y1, '-', x, y2, '--', x, y3, '-.', x, y4, ':')
 plt.show()
 ```
-![2_5](lessons/images/2_5.png)
+![2.5](2.5.png)
 ### Урок 3.1
 ``` python
 import matplotlib.pyplot as plt
@@ -179,7 +179,7 @@ for i in range(3):
             break
 plt.show()
 ```
-![3_1](lessons/images/3_1.png)
+![3.1](3.1.png)
 
 ## Задание варианта
 ``` python
