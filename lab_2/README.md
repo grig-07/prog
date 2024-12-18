@@ -8,7 +8,7 @@
 4. Составить блок-схемы.
 5. Оформить отчёт в README.md.
 ## Программа
-```
+``` c
 #include <stdio.h>
 #include <math.h>
 int main(){
