@@ -8,23 +8,27 @@
 4. Составить блок-схемы.
 5. Оформить отчёт в README.md.
 ## Программа
-#include <math.h>
+```
 #include <stdio.h>
+#include <math.h>
 int main(){
-    double h;
-    FILE *graph;
-    printf(Enter h: ");
-    scanf("%lf", &h);
-    graph = fopen("graph.txt", "w");
-      for (double x=0;x<=2;x=x+h;){
-          if (x <= 2){
-              fprinf(graph, "%lf\t%lf\n", x, sqrt(x+1) - sqrt(x) - 0,5);
-              prinf("%lf\t%lf\n", x, sqrt(x+1) - sqrt(x) - 0,5);
-          }else{
-              fprinf(graph, "%lf\t%lf\n", x, exp(-x - 1/x));
-          }
-          fclose(graph);
-          return 0;
-      }
+    double h, x=-1;
+    FILE "graph;
+    printf ("Enter h: ");
+    scanf (*%1f*, &h);
+    graph = fopen ("graph.txt", "w");
+    while (x<=2){ 
+        if (x<=1)(
+            fprintf(graph, "%1f\t%1f\n*, x, exp(-2*sin(x)));
+            printf("%1f\t%1f\n", x, exp(-2*sin(x)));
+        } else(
+            fprintf(graph, "X1f\t%1f\n*, x, pow(x,2) - cos(x)/sin(x));
+            printf("x1f\t%1f\n", x, pow(x,2) -cos(x)/sin(x));
+        }
+        x+=h;
+        x-round (x*1000000)/1000000;
+    }
+    fclose(graph);
+    return 0;
 }
 ```
