@@ -227,4 +227,4 @@ plt.title('График функции 7 вариант')
 plt.legend()
 plt.show()
 ```
-![7v](lessons/images/7v.png)
+![graph](graph.png)
