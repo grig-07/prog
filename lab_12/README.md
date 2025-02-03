@@ -54,7 +54,7 @@ from .report_generator import save_to_docx, save_to_excel
 
 def create_gui():
     app = App(title="Расчёт отделочных материалов")
-
+    ``` py
     area_text = Text(app, text="Площадь помещения (кв.м):")
     area_input = TextBox(app)
 
@@ -115,16 +115,16 @@ PushButton(app, text="Сохранить в .docx", command=lambda: save_report(
     save_excel_button = PushButton(app, text="Сохранить в .xlsx", command=lambda: save_report("xlsx"))
 
     app.display()
-
+```
 #3. Модуль report_generator.py (остаётся без изменений, как в предыдущем примере)
 #4. Основная программа (main.py)
 # main.py
-
+``` py
 from finishing_materials.gui import create_gui
 
 if __name__ == "__main__":
     create_gui()
-
+```
 Инструкция по запуску
  * Создайте папку с именем finishing_materials.
  * Поместите в неё файлы calculator.py, gui.py и report_generator.py.
