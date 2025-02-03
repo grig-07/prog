@@ -46,6 +46,7 @@ def calculate_material_cost(quantity, material_type):
         return 0
 ```
 2. Модуль gui.py
+``` py
 # gui.py
 
 from guizero import App, Text, TextBox, Combo, PushButton, error
