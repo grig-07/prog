@@ -5,7 +5,7 @@
  * report_generator.py: модуль, содержащий функции для сохранения результатов в отчёт.
 1. Модуль calculator.py
 # calculator.py
-
+``` py
 def calculate_material_quantity(area, material_type):
     """
     Функция для расчёта количества материала в зависимости от площади и типа.
@@ -44,7 +44,7 @@ def calculate_material_cost(quantity, material_type):
         return quantity * price_per_package
     else:
         return 0
-
+```
 2. Модуль gui.py
 # gui.py
 
