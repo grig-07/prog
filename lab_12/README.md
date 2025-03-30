@@ -1,135 +1,177 @@
-Разработка пакета для расчёта количества и стоимости отделочных материалов
-В данном примере мы разработаем пакет finishing_materials, содержащий три модуля:
- * calculator.py: модуль, содержащий функции для расчёта количества и стоимости отделочных материалов.
- * gui.py: модуль, содержащий функции для создания графического интерфейса пользователя на основе guizero.
- * report_generator.py: модуль, содержащий функции для сохранения результатов в отчёт.
-1. Модуль calculator.py
-# calculator.py
+# Лабораторная работа №12
+##Задания для самостоятельного выполнения
+Сложность: Rare
+По своему варианту задания и GUI фреймворка создайте пакет, содержащий 3 модуля, и подключите его к основной программе. Основная программа должна предоставлять:
+- графический пользовательский интерфейс с возможностями ввода требуемых параметров и отображения результатов расчёта,
+- возможность сохранить результаты в отчёт формата .doc или .xls (например, пакеты python-docx и openpyxl).графический пользовательский интерфейс с возможностями ввода требуемых параметров и отображения результатов расчёта,
+## Мой GUI-ФРЕЙМВОРК - guizero.
+Задание варианта 9:
+Отделочные материалы
+Обои
+Плитка
+Ламинат
+Расчёт количества и стоимости для закупки материалов в зависимости от площади.
+### Решение:
+1. Создание директории проекта
+Откройте командную строку и выполните следующие команды для создания директории проекта и перехода в нее:
+mkdir material_calculator
+cd material_calculator
+2. Создание пакета package
+mkdir package
+cd package
+3. Создание необходимых файлов
+3.1. __init__.py
+type nul > __init__.py
+3.2. calculations.py
+type nul > calculations.py
+notepad calculations.py
+Теперь в открытом блокноте нужно вставить следующий код:
 ``` py
-def calculate_material_quantity(area, material_type):
-    """
-    Функция для расчёта количества материала в зависимости от площади и типа.
-    """
-    if material_type == "Обои":
-        # Пример: считаем, что ширина рулона обоев 0.5 м, длина 10 м
-        roll_area = 0.5 * 10
-        rolls = (area + roll_area - 1) // roll_area  # Округляем в большую сторону
-        return rolls
-    elif material_type == "Плитка":
-        # Пример: считаем, что размер плитки 0.3 м * 0.3 м
-        tile_area = 0.3 * 0.3
-        tiles = (area + tile_area - 1) // tile_area
-        return tiles
-    elif material_type == "Ламинат":
-        # Пример: считаем, что одна упаковка ламината покрывает 2 кв.м.
-        package_area = 2
-        packages = (area + package_area - 1) // package_area
-        return packages
-    else:
-        return 0
+# package/calculations.py
 
-def calculate_material_cost(quantity, material_type):
-    """
-    Функция для расчёта стоимости материала в зависимости от количества и типа.
-    Цены условные, необходимо заменить на актуальные.
-    """
-    if material_type == "Обои":
-        price_per_roll = 500  # руб. за рулон
-        return quantity * price_per_roll
-    elif material_type == "Плитка":
-        price_per_tile = 50  # руб. за плитку
-        return quantity * price_per_tile
-    elif material_type == "Ламинат":
-        price_per_package = 1000  # руб. за упаковку
-        return quantity * price_per_package
-    else:
-        return 0
+class Material:
+    def __init__(self, name, unit_price, area_per_unit):
+        self.name = name
+        self.unit_price = unit_price  # цена за единицу материала
+        self.area_per_unit = area_per_unit  # площадь, покрываемая одной единицей материала
+
+    def calculate_quantity(self, area):
+        return (area / self.area_per_unit) + 0.5  # округляем вверх
+
+    def calculate_cost(self, quantity):
+        return quantity * self.unit_price
 ```
-2. Модуль gui.py
+3.3. gui.py
+type nul > gui.py
+notepad gui.py
+В открытом блокноте должен быть следующий код:
 ``` py
-# gui.py
+# package/gui.py
 
-from guizero import App, Text, TextBox, Combo, PushButton, error
-from .calculator import calculate_material_quantity, calculate_material_cost
-from .report_generator import save_to_docx, save_to_excel
+from guizero import App, Text, TextBox, Combo, PushButton, Picture
+from report import save_report
+from calculations import Material
 
-def create_gui():
-    app = App(title="Расчёт отделочных материалов")
-    ``` py
-    area_text = Text(app, text="Площадь помещения (кв.м):")
-    area_input = TextBox(app)
+class MaterialApp:
+    def __init__(self, app):
+        self.app = app
+        self.app.title("Расчет материалов")
+        self.app.width = 400
+        self.app.height = 300
 
-    material_text = Text(app, text="Тип материала:")
-    material_combo = Combo(app, options=["Обои", "Плитка", "Ламинат"])
+        self.material_types = ["Обои", "Плитка", "Ламинат"]
+        self.selected_material = None
 
-    def calculate_and_display():
+        Text(self.app, text="Выберите материал:")
+        self.material_choice = Combo(self.app, options=self.material_types, command=self.update_material)
+
+        self.parameters = {}
+        self.create_material_fields()
+
+        self.calculate_button = PushButton(self.app, text="Рассчитать", command=self.calculate)
+        self.save_button = PushButton(self.app, text="Сохранить отчет", command=self.save_report)
+
+    def create_material_fields(self):
+        for widget in self.app.children[2:]:
+            widget.destroy()
+
+        if self.selected_material:
+            self.parameters = {}
+            Text(self.app, text=f"Площадь ({self.selected_material.name}):")
+            self.parameters['area'] = TextBox(self.app)
+
+            Text(self.app, text="Цена за единицу:")
+            self.parameters['unit_price'] = TextBox(self.app)
+
+            Text(self.app, text="Площадь, покрываемая одной единицей:")
+            self.parameters['area_per_unit'] = TextBox(self.app)
+
+    def update_material(self, choice):
+        self.selected_material = Material(
+            name=choice,
+            unit_price=0,  # значения будут введены пользователем
+            area_per_unit=0
+        )
+        self.create_material_fields()
+
+    def calculate(self):
         try:
-            area = float(area_input.value)
-            material_type = material_combo.value
+            area = float(self.parameters['area'].value)
+            unit_price = float(self.parameters['unit_price'].value)
+            area_per_unit = float(self.parameters['area_per_unit'].value)
 
-            if area <= 0:
-                raise ValueError("Площадь должна быть больше нуля.")
+            self.selected_material.unit_price = unit_price
+            self.selected_material.area_per_unit = area_per_unit
 
-            quantity = calculate_material_quantity(area, material_type)
-            cost = calculate_material_cost(quantity, material_type)
+            quantity = self.selected_material.calculate_quantity(area)
+            cost = self.selected_material.calculate_cost(quantity)
 
-            result_text.value = f"Необходимо: {quantity} {get_unit(material_type)}, Стоимость: {cost} руб."
+            result_text = f"Количество: {quantity:.2f} единиц\nСтоимость: {cost:.2f} руб."
+            Text(self.app, text=result_text)
+        except ValueError:
+            error_text = "Пожалуйста, введите корректные числовые значения."
+            Text(self.app, text=error_text, color="red")
 
-        except ValueError as e:
-            error(title="Ошибка", text=str(e))
-        except Exception as e:
-            error(title="Ошибка", text="Произошла ошибка при расчёте.")
-
-    def get_unit(material_type):
-        if material_type == "Обои":
-            return "рулонов"
-        elif material_type == "Плитка":
-            return "плиток"
-        elif material_type == "Ламинат":
-            return "упаковок"
-        else:
-            return ""
-
-    calculate_button = PushButton(app, text="Рассчитать", command=calculate_and_display)
-
-    result_text = Text(app, text="Результат:")
-
-    def save_report(format):
+    def save_report(self):
         try:
-            area = area_input.value
-            material_type = material_combo.value
-            result = result_text.value
+            area = float(self.parameters['area'].value)
+            unit_price = float(self.parameters['unit_price'].value)
+            area_per_unit = float(self.parameters['area_per_unit'].value)
 
-            if format == "docx":
-                save_to_docx(area, material_type, result)
-            elif format == "xlsx":
-                save_to_excel(area, material_type, result)
+            quantity = self.selected_material.calculate_quantity(area)
+            cost = self.selected_material.calculate_cost(quantity)
 
-            # Optionally, provide feedback to the user
-            # app.info("Отчёт сохранён")
+            report_content = f"Материал: {self.selected_material.name}\nПлощадь: {area} кв.м.\nЦена за единицу: {unit_price} руб.\nКоличество: {quantity:.2f} единиц\nСтоимость: {cost:.2f} руб."
 
+            save_report(report_content)
+            success_text = "Отчет успешно сохранен."
+            Text(self.app, text=success_text, color="green")
         except Exception as e:
-            error(title="Ошибка", text=f"Ошибка сохранения: {e}")
-
-    save_docx_button =
-PushButton(app, text="Сохранить в .docx", command=lambda: save_report("docx"))
-    save_excel_button = PushButton(app, text="Сохранить в .xlsx", command=lambda: save_report("xlsx"))
-
-    app.display()
+            error_text = f"Ошибка при сохранении отчета: {e}"
+            Text(self.app, text=error_text, color="red")
 ```
-#3. Модуль report_generator.py (остаётся без изменений, как в предыдущем примере)
-#4. Основная программа (main.py)
+3.4. report.py
+type nul > report.py
+notepad report.py
+В блокноте должен быть следующий код:
+``` py
+# package/report.py
+
+import openpyxl
+from datetime import datetime
+
+def save_report(content):
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Отчет"
+
+    ws['A1'] = "Отчет о расчете материалов"
+    ws['A2'] = f"Дата: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+    ws['A4'] = content
+
+    wb.save("report.xlsx")
+```
+4. Создание основного файла main.py
+cd ..
+type nul > main.py
+notepad main.py
+Вставить следующий код:
+``` py
 # main.py
-``` py
-from finishing_materials.gui import create_gui
+
+from package.gui import MaterialApp
+from guizero import App
+
+def main():
+    app = App()
+    MaterialApp(app)
+    app.display()
 
 if __name__ == "__main__":
-    create_gui()
+    main()
 ```
-Инструкция по запуску
- * Создайте папку с именем finishing_materials.
- * Поместите в неё файлы calculator.py, gui.py и report_generator.py.
- * Создайте файл main.py в той же папке, где находится папка finishing_materials.
- * Установите необходимые библиотеки: pip install guizero python-docx openpyxl.
- * Запустите файл main.py.
-В результате будет создан графический интерфейс, позволяющий вводить площадь помещения, выбирать тип материала, рассчитывать необходимое количество и стоимость, а также сохранять результаты в отчёт.
+6. Установка зависимостей
+Установите необходимые пакеты Python с помощью pip.Выполните следующие команды:
+pip install guizero openpyxl
+Если у вас несколько версий Python:
+python -m pip install guizero openpyxl
