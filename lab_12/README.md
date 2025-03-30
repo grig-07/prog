@@ -14,8 +14,8 @@
 ### Решение:
 1. Создание директории проекта
 - Откройте командную строку и выполните следующие команды для создания директории проекта и перехода в нее:
-"mkdir material_calculator
-cd material_calculator"
+# mkdir material_calculator
+# cd material_calculator
 2. Создание пакета package
 mkdir package
 cd package
