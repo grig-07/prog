@@ -189,7 +189,7 @@ if __name__ == "__main__":
 ```
 pip install guizero openpyxl
 ```
-Если у вас несколько версий Python:
+Если несколько версий Python:
 ```
 python -m pip install guizero openpyxl
 ```
