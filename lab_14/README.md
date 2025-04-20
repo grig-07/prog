@@ -12,10 +12,47 @@
 
 База данных предназначена для учета книг, авторов и заказов в книжном магазине. Она включает в себя следующие таблицы:
 
-- **Авторы**: Информация об авторах книг.
-- **Книги**: Информация о книгах в магазине.
-- **Заказы**: Информация о заказах книг.
+- **Authors**: Информация об авторах книг.
+- **Books**: Информация о книгах в магазине.
+- **Customers**: Информация о клиентах.
+- **Orders**: Информация о заказах книг.
 
+## Создание таблиц БД
+``` sql
+-- Таблица Авторы
+CREATE TABLE Authors (
+    author_id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    biography TEXT
+);
+
+-- Таблица Книги
+CREATE TABLE Books (
+    book_id INT PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    author_id INT,
+    FOREIGN KEY (author_id) REFERENCES Authors(author_id)
+);
+
+-- Таблица Клиенты
+CREATE TABLE Customers (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(100) NOT NULL,
+    customer_address VARCHAR(200)
+);
+
+-- Таблица Заказы
+CREATE TABLE Orders (
+    order_id INT PRIMARY KEY,
+    order_date DATE NOT NULL,
+    delivery_status VARCHAR(50),
+    book_id INT,
+    customer_id INT,
+    FOREIGN KEY (book_id) REFERENCES Books(book_id),
+    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
+);
+```
 ## Таблицы
 
 ### Авторы
