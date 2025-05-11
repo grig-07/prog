@@ -12,14 +12,10 @@
 2. Иерархия наследования, где подклассы наследуются от абстрактного базового класса.
 3. Managed-атрибуты с использованием свойств (@property).
 4. Минимум 2 dunder-метода у подклассов (например, __str__ и __repr__).
-5. GUI с использованием guizero, который будет взаимодействовать с этими классами.
-### Абстрактный базовый класс и иерархия наследования:
+5. GUI с использованием guizetta, который будет взаимодействовать с этими классами.
+### calculations.py
 ``` py
 from abc import ABC, abstractmethod
-import guizero
-from guizero import App, Text, TextBox, Combo, PushButton, Text
-import openpyxl
-from datetime import datetime
 
 class Material(ABC):
     def __init__(self, name):
@@ -204,4 +200,28 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+### report.py
+``` py
+import openpyxl
+from datetime import datetime
 
+def save_report(content):
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Отчет"
+
+    ws['A1'] = "Отчет о расчете материалов"
+    ws['A2'] = f"Дата: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+    ws['A4'] = content
+
+    wb.save("report.xlsx")
+```
+# Вывод при расчёте
+1. Выбор материала "Обои"
+![вывод](вывод.PNG)
+2. Выбор материала "Плитка":
+![плитка](плитка.PNG)
+3. Выбор материала "Ламинат":
+![ламинат](ламинат.PNG)
+4. Вывод при сохранении отчёта:
+![отчет](отчет.PNG)
